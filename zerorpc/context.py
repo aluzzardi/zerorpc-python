@@ -2,6 +2,7 @@
 
 
 import uuid
+import functools
 
 import gevent_zmq as zmq
 
@@ -53,6 +54,7 @@ class Context(zmq.Context):
     def middleware_call_procedure(self, procedure, *args, **kwargs):
         class chain(object):
             def __init__(self, fct, next):
+                functools.update_wrapper(self, next)
                 self.fct = fct
                 self.next = next
 
